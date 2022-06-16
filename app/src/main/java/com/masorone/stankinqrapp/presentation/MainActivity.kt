@@ -9,6 +9,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import com.budiyev.android.codescanner.*
 import com.masorone.stankinqrapp.R
+import com.masorone.stankinqrapp.data.MachineRepositoryBase
+import com.masorone.stankinqrapp.data.cloud.MachineCloudDataStore
+import com.masorone.stankinqrapp.data.cloud.MachineRetrofitBuilder
+import com.masorone.stankinqrapp.domain.FetchByIdUseCase
+import retrofit2.converter.gson.GsonConverterFactory
 
 class MainActivity : AppCompatActivity() {
 
@@ -16,7 +21,19 @@ class MainActivity : AppCompatActivity() {
     private lateinit var scannerView: CodeScannerView
     private lateinit var codeScanner: CodeScanner
 
-    private val viewModel: MainViewModel by viewModels { MainViewModelFactory(codeScanner) }
+    private val viewModel: MainViewModel by viewModels {
+        ViewModelFactory(
+            FetchByIdUseCase(
+                MachineRepositoryBase(
+                    MachineCloudDataStore.Base(
+                        MachineRetrofitBuilder(
+                            GsonConverterFactory.create()
+                        ).apiService
+                    )
+                )
+            )
+        )
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,10 +46,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun start() {
         if (cameraPermissionGranted()) {
-            viewModel.setupCodeScanner()
-            viewModel.valueFromScanner.observe(this) {
-                valueFromScanner.text = it
-            }
+            setupCodeScanner()
+            handleCodeScanner()
+            observeCodeScannerValue()
         } else {
             requestPermission()
         }
@@ -42,6 +58,27 @@ class MainActivity : AppCompatActivity() {
         this,
         android.Manifest.permission.CAMERA
     ) == PackageManager.PERMISSION_GRANTED
+
+    private fun setupCodeScanner() {
+        codeScanner.autoFocusMode = AutoFocusMode.CONTINUOUS
+        codeScanner.scanMode = ScanMode.CONTINUOUS
+    }
+
+    private fun handleCodeScanner() {
+        codeScanner.decodeCallback = DecodeCallback { qrCode ->
+            viewModel.fetch(qrCode)
+        }
+
+        codeScanner.errorCallback = ErrorCallback { error ->
+            viewModel.showError(error)
+        }
+    }
+
+    private fun observeCodeScannerValue() {
+        viewModel.valueFromScanner.observe(this) {
+            valueFromScanner.text = it
+        }
+    }
 
     private fun requestPermission() {
         ActivityCompat.requestPermissions(
@@ -56,10 +93,14 @@ class MainActivity : AppCompatActivity() {
         permissions: Array<out String>,
         grantResults: IntArray
     ) {
-        if (requestCode == CAMERA_RC && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+        if (requestCode == CAMERA_RC && grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
             start()
         } else {
-            Toast.makeText(this, "Необходимо разрешение доступа к камере, для работы приложения", Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                this,
+                "Необходимо разрешение доступа к камере, для работы приложения",
+                Toast.LENGTH_SHORT
+            ).show()
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
