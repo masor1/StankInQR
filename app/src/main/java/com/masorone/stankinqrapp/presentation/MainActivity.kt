@@ -28,11 +28,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun start() {
-        if (ActivityCompat.checkSelfPermission(
-                this,
-                android.Manifest.permission.CAMERA
-            ) == PackageManager.PERMISSION_GRANTED
-        ) {
+        if (cameraPermissionGranted()) {
             viewModel.setupCodeScanner()
             viewModel.valueFromScanner.observe(this) {
                 valueFromScanner.text = it
@@ -41,6 +37,11 @@ class MainActivity : AppCompatActivity() {
             requestPermission()
         }
     }
+
+    private fun cameraPermissionGranted() = ActivityCompat.checkSelfPermission(
+        this,
+        android.Manifest.permission.CAMERA
+    ) == PackageManager.PERMISSION_GRANTED
 
     private fun requestPermission() {
         ActivityCompat.requestPermissions(
