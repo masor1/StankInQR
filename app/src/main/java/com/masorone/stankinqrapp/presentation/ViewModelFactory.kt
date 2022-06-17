@@ -9,6 +9,6 @@ class ViewModelFactory(
 ) : ViewModelProvider.Factory {
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        return MainViewModel(fetchByIdUseCase) as T
+        return QRCodeScannerViewModel(fetchByIdUseCase) as T
     }
 }

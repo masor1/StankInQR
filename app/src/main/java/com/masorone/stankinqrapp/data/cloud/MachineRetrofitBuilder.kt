@@ -16,6 +16,6 @@ class MachineRetrofitBuilder(
 
     private companion object {
 
-        const val BASE_URL = "https://8d37-46-138-59-255.eu.ngrok.io"
+        const val BASE_URL = "https://a266-213-33-195-2.eu.ngrok.io"
     }
 }
