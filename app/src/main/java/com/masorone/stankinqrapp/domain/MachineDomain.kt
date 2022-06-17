@@ -9,6 +9,6 @@ sealed class MachineDomain {
     ) : MachineDomain()
 
     data class Error(
-        private val e: Exception
+        private val errorType: ErrorType
     ) : MachineDomain()
 }

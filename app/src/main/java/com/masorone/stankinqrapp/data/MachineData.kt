@@ -1,6 +1,8 @@
 package com.masorone.stankinqrapp.data
 
+import com.masorone.stankinqrapp.domain.ErrorType
 import com.masorone.stankinqrapp.domain.MachineDomain
+import retrofit2.HttpException
 
 sealed class MachineData {
 
@@ -19,6 +21,13 @@ sealed class MachineData {
         private val e: Exception
     ) : MachineData() {
 
-        override fun map() = MachineDomain.Error(e)
+        override fun map(): MachineDomain {
+            val errorType = when (e) {
+                is IndexOutOfBoundsException -> ErrorType.NOT_FOUND
+                is HttpException -> ErrorType.SERVICE_UNAVAILABLE
+                else -> ErrorType.GENERIC
+            }
+            return MachineDomain.Error(errorType)
+        }
     }
 }

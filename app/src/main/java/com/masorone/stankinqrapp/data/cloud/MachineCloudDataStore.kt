@@ -1,6 +1,5 @@
 package com.masorone.stankinqrapp.data.cloud
 
-import android.util.Log
 import com.masorone.stankinqrapp.data.MachineData
 
 interface MachineCloudDataStore {
@@ -14,7 +13,6 @@ interface MachineCloudDataStore {
         override suspend fun fetch(id: String) = try {
             machineApiService.fetch(id)[0].map()
         } catch (e: Exception) {
-            Log.d("StanokRepositoryBase", "fetch: ${e.message}")
             MachineData.Error(e)
         }
     }
