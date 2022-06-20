@@ -1,6 +1,7 @@
 package com.masorone.stankinqrapp.presentation
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,7 +10,9 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.budiyev.android.codescanner.*
+import com.masorone.stankinqrapp.R
 import com.masorone.stankinqrapp.data.MachineRepositoryBase
 import com.masorone.stankinqrapp.data.cloud.MachineCloudDataStore
 import com.masorone.stankinqrapp.data.cloud.MachineRetrofitBuilder
@@ -75,21 +78,34 @@ class QRCodeScannerFragment : Fragment() {
 
     private fun setupCodeScanner() {
         codeScanner.autoFocusMode = AutoFocusMode.CONTINUOUS
-        codeScanner.scanMode = ScanMode.CONTINUOUS
+        codeScanner.scanMode = ScanMode.SINGLE
     }
 
     private fun handleCodeScanner() {
         codeScanner.decodeCallback = DecodeCallback { qrCode ->
+            requireActivity().runOnUiThread {
+                binding.progressLayout.visibility = View.VISIBLE
+            }
             viewModel.fetch(qrCode)
         }
-        codeScanner.errorCallback = ErrorCallback { error ->
-            viewModel.showError(error)
+        codeScanner.errorCallback = ErrorCallback { throwable ->
+            viewModel.showError(throwable)
         }
     }
 
     private fun observeCodeScannerValue() {
-        viewModel.valueFromScanner.observe(viewLifecycleOwner) {
-            binding.valueFromScanner.text = it
+        viewModel.valueFromScanner.observe(viewLifecycleOwner) { machine ->
+            findNavController().apply {
+                navigate(
+                    R.id.action_QRCodeScannerFragment_to_machineDescriptionFragment,
+                    Bundle().apply {
+                        when (machine) {
+                            is MachineUI.Success -> putParcelable(MachineUI.SUCCESS, machine)
+                            is MachineUI.Error -> putParcelable(MachineUI.ERROR, machine)
+                        }
+                    }
+                )
+            }
         }
     }
 

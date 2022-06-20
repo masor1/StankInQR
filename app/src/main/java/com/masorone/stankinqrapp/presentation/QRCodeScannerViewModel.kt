@@ -8,30 +8,22 @@ import com.google.zxing.Result
 import com.masorone.stankinqrapp.domain.FetchByIdUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class QRCodeScannerViewModel(
     private val fetchByIdUseCase: FetchByIdUseCase
 ) : ViewModel() {
 
-    private val _valueFromScanner = MutableLiveData<String>()
-    val valueFromScanner: LiveData<String> = _valueFromScanner
-
-    private var lastQrCode = ""
+    private val _valueFromScanner = MutableLiveData<MachineUI>()
+    val valueFromScanner: LiveData<MachineUI> = _valueFromScanner
 
     fun fetch(qrCode: Result) {
-        if (lastQrCode != qrCode.text) {
-            viewModelScope.launch {
-                val machine = fetchByIdUseCase.invoke(qrCode.text)
-                withContext(Dispatchers.Main) {
-                    _valueFromScanner.value = machine.toString()
-                }
-            }
-            lastQrCode = qrCode.text
+        viewModelScope.launch(Dispatchers.IO) {
+            val machine = fetchByIdUseCase.invoke(qrCode.text).map()
+            _valueFromScanner.postValue(machine)
         }
     }
 
-    fun showError(error: Throwable) {
-        _valueFromScanner.value = error.message
+    fun showError(throwable: Throwable) {
+        _valueFromScanner.value = MachineUI.Error(throwable.message.toString())
     }
 }

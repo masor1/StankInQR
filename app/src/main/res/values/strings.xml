@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">StankInQR</string>
+    <string name="id">ID</string>
+    <string name="name">NAME</string>
 </resources>
