@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/QRCodeScannerFragment"
-        android:name="com.masorone.stankinqrapp.presentation.QRCodeScannerFragment"
+        android:name="com.masorone.stankinqrapp.presentation.qr_code_scanner_screen.QRCodeScannerFragment"
         android:label="QRCodeScannerFragment">
         <action
             android:id="@+id/action_QRCodeScannerFragment_to_machineDescriptionFragment"
@@ -21,7 +21,7 @@
 
     <fragment
         android:id="@+id/machineDescriptionFragment"
-        android:name="com.masorone.stankinqrapp.presentation.MachineDescriptionFragment"
+        android:name="com.masorone.stankinqrapp.presentation.machine_description_screen.MachineDescriptionFragment"
         android:label="MachineDescriptionFragment">
         <action
             android:id="@+id/action_machineDescriptionFragment_to_QRCodeScannerFragment"

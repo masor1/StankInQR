@@ -1,4 +1,4 @@
-package com.masorone.stankinqrapp.presentation
+package com.masorone.stankinqrapp.presentation.machine_description_screen
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,6 +10,7 @@ import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.masorone.stankinqrapp.R
 import com.masorone.stankinqrapp.databinding.FragmentMachineDescriptionBinding
+import com.masorone.stankinqrapp.presentation.MachineUI
 
 class MachineDescriptionFragment : Fragment() {
 

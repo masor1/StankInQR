@@ -1,7 +1,6 @@
-package com.masorone.stankinqrapp.presentation
+package com.masorone.stankinqrapp.presentation.qr_code_scanner_screen
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,6 +17,8 @@ import com.masorone.stankinqrapp.data.cloud.MachineCloudDataStore
 import com.masorone.stankinqrapp.data.cloud.MachineRetrofitBuilder
 import com.masorone.stankinqrapp.databinding.FragmentQrCodeScannerBinding
 import com.masorone.stankinqrapp.domain.FetchByIdUseCase
+import com.masorone.stankinqrapp.presentation.MachineUI
+import com.masorone.stankinqrapp.presentation.ViewModelFactory
 import retrofit2.converter.gson.GsonConverterFactory
 
 class QRCodeScannerFragment : Fragment() {

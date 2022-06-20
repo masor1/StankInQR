@@ -1,4 +1,4 @@
-package com.masorone.stankinqrapp.presentation
+package com.masorone.stankinqrapp.presentation.qr_code_scanner_screen
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.zxing.Result
 import com.masorone.stankinqrapp.domain.FetchByIdUseCase
+import com.masorone.stankinqrapp.presentation.MachineUI
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
