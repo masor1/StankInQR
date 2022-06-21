@@ -7,6 +7,10 @@ sealed class MachineUI {
 
     abstract fun show(): String
 
+    abstract fun areItemsTheSame(newItem: MachineUI): Boolean
+
+    abstract fun areContentsTheSame(newItem: MachineUI): Boolean
+
     @Parcelize
     data class Success(
         private val id: String,
@@ -15,6 +19,10 @@ sealed class MachineUI {
     ) : MachineUI(), Parcelable {
 
         override fun show() = "$id|$name|$imageUrl"
+
+        override fun areItemsTheSame(newItem: MachineUI) = id == (newItem as Success).id
+
+        override fun areContentsTheSame(newItem: MachineUI) = this == newItem as Success
     }
 
     @Parcelize
@@ -23,6 +31,10 @@ sealed class MachineUI {
     ) : MachineUI(), Parcelable {
 
         override fun show() = message
+
+        override fun areItemsTheSame(newItem: MachineUI) = true
+
+        override fun areContentsTheSame(newItem: MachineUI) = true
     }
 
     companion object {

@@ -1,7 +1,8 @@
 package com.masorone.stankinqrapp.di
 
 import android.app.Application
-import com.masorone.stankinqrapp.presentation.qr_code_scanner_screen.QRCodeScannerFragment
+import com.masorone.stankinqrapp.presentation.screen_main.MainFragment
+import com.masorone.stankinqrapp.presentation.screen_qr_code_scanner.QRCodeScannerFragment
 import dagger.BindsInstance
 import dagger.Component
 
@@ -13,6 +14,8 @@ import dagger.Component
     ]
 )
 interface AppComponent {
+
+    fun inject(fragment: MainFragment)
 
     fun inject(fragment: QRCodeScannerFragment)
 

@@ -1,18 +1,18 @@
-package com.masorone.stankinqrapp.presentation.qr_code_scanner_screen
+package com.masorone.stankinqrapp.presentation.screen_qr_code_scanner
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.zxing.Result
-import com.masorone.stankinqrapp.domain.FetchByIdUseCase
+import com.masorone.stankinqrapp.domain.FetchMachineByIdUseCase
 import com.masorone.stankinqrapp.presentation.MachineUI
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class QRCodeScannerViewModel @Inject constructor(
-    private val fetchByIdUseCase: FetchByIdUseCase
+    private val fetchMachineByIdUseCase: FetchMachineByIdUseCase
 ) : ViewModel() {
 
     private val _valueFromScanner = MutableLiveData<MachineUI>()
@@ -20,7 +20,7 @@ class QRCodeScannerViewModel @Inject constructor(
 
     fun fetch(qrCode: Result) {
         viewModelScope.launch(Dispatchers.IO) {
-            val machine = fetchByIdUseCase.invoke(qrCode.text).map()
+            val machine = fetchMachineByIdUseCase.invoke(qrCode.text).map()
             _valueFromScanner.postValue(machine)
         }
     }

@@ -2,11 +2,11 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_graph.xml"
-    app:startDestination="@id/QRCodeScannerFragment">
+    app:startDestination="@id/mainFragment">
 
     <fragment
         android:id="@+id/QRCodeScannerFragment"
-        android:name="com.masorone.stankinqrapp.presentation.qr_code_scanner_screen.QRCodeScannerFragment"
+        android:name="com.masorone.stankinqrapp.presentation.screen_qr_code_scanner.QRCodeScannerFragment"
         android:label="QRCodeScannerFragment">
         <action
             android:id="@+id/action_QRCodeScannerFragment_to_machineDescriptionFragment"
@@ -17,11 +17,20 @@
             app:popExitAnim="@anim/slide_out_right"
             app:popUpTo="@+id/QRCodeScannerFragment"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_QRCodeScannerFragment_to_mainFragment"
+            app:destination="@id/mainFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:popUpTo="@+id/QRCodeScannerFragment"
+            app:popUpToInclusive="true"/>
     </fragment>
 
     <fragment
         android:id="@+id/machineDescriptionFragment"
-        android:name="com.masorone.stankinqrapp.presentation.machine_description_screen.MachineDescriptionFragment"
+        android:name="com.masorone.stankinqrapp.presentation.screen_machine_description.MachineDescriptionFragment"
         android:label="MachineDescriptionFragment">
         <action
             android:id="@+id/action_machineDescriptionFragment_to_QRCodeScannerFragment"
@@ -31,6 +40,20 @@
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right"
             app:popUpTo="@+id/machineDescriptionFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="com.masorone.stankinqrapp.presentation.screen_main.MainFragment"
+        android:label="MainFragment">
+        <action
+            android:id="@+id/action_mainFragment_to_QRCodeScannerFragment"
+            app:destination="@id/QRCodeScannerFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:popUpTo="@+id/mainFragment"
             app:popUpToInclusive="true" />
     </fragment>
 </navigation>

@@ -1,4 +1,4 @@
-package com.masorone.stankinqrapp.presentation.machine_description_screen
+package com.masorone.stankinqrapp.presentation.screen_machine_description
 
 import android.os.Bundle
 import android.view.LayoutInflater

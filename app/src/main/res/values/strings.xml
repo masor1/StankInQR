@@ -2,4 +2,5 @@
     <string name="app_name">StankInQR</string>
     <string name="id">ID</string>
     <string name="name">NAME</string>
+    <string name="open_qr_code_scanner_screen_fab_desc">Open QR code scanner screen</string>
 </resources>

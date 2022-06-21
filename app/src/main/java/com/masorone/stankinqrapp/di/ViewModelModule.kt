@@ -1,7 +1,8 @@
 package com.masorone.stankinqrapp.di
 
 import androidx.lifecycle.ViewModel
-import com.masorone.stankinqrapp.presentation.qr_code_scanner_screen.QRCodeScannerViewModel
+import com.masorone.stankinqrapp.presentation.screen_main.MainViewModel
+import com.masorone.stankinqrapp.presentation.screen_qr_code_scanner.QRCodeScannerViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
@@ -12,5 +13,10 @@ interface ViewModelModule {
     @IntoMap
     @ViewModelKey(QRCodeScannerViewModel::class)
     @Binds
-    fun bindNewsViewModel(impl: QRCodeScannerViewModel): ViewModel
+    fun bindQRCodeScannerViewModel(impl: QRCodeScannerViewModel): ViewModel
+
+    @IntoMap
+    @ViewModelKey(MainViewModel::class)
+    @Binds
+    fun bindMainViewModell(impl: MainViewModel): ViewModel
 }

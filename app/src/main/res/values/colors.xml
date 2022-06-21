@@ -7,7 +7,9 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="machine_item">#E8E6E6</color>
     <color name="progress_layout">#C9000000</color>
+    <color name="button_open_qr_code_scanner">#C9000000</color>
     <color name="line_1">#E6EE9C</color>
     <color name="line_2">#DCE775</color>
 </resources>

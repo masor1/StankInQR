@@ -1,10 +1,11 @@
-package com.masorone.stankinqrapp.presentation.qr_code_scanner_screen
+package com.masorone.stankinqrapp.presentation.screen_qr_code_scanner
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
@@ -61,6 +62,13 @@ class QRCodeScannerFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         codeScanner = CodeScanner(requireContext(), binding.scanner)
         permReqLauncher.launch(android.Manifest.permission.CAMERA)
+        requireActivity().onBackPressedDispatcher.addCallback(
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    findNavController().navigate(R.id.action_QRCodeScannerFragment_to_mainFragment)
+                }
+            }
+        )
     }
 
     private fun start() {
