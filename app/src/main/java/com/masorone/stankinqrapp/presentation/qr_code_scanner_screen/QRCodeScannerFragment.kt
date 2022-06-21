@@ -92,6 +92,9 @@ class QRCodeScannerFragment : Fragment() {
         codeScanner.errorCallback = ErrorCallback { throwable ->
             viewModel.showError(throwable)
         }
+        binding.scanner.setOnClickListener {
+            codeScanner.startPreview()
+        }
     }
 
     private fun observeCodeScannerValue() {
