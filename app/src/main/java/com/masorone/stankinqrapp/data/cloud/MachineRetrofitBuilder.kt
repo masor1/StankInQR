@@ -2,8 +2,9 @@ package com.masorone.stankinqrapp.data.cloud
 
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import javax.inject.Inject
 
-class MachineRetrofitBuilder(
+class MachineRetrofitBuilder @Inject constructor(
     private val converterFactory: GsonConverterFactory
 ) {
 
@@ -16,6 +17,6 @@ class MachineRetrofitBuilder(
 
     private companion object {
 
-        const val BASE_URL = "https://a266-213-33-195-2.eu.ngrok.io"
+        const val BASE_URL = "https://9e1e-213-33-195-2.eu.ngrok.io/"
     }
 }

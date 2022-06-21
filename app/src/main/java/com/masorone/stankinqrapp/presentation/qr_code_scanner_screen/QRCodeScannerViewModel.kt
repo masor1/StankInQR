@@ -9,8 +9,9 @@ import com.masorone.stankinqrapp.domain.FetchByIdUseCase
 import com.masorone.stankinqrapp.presentation.MachineUI
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class QRCodeScannerViewModel(
+class QRCodeScannerViewModel @Inject constructor(
     private val fetchByIdUseCase: FetchByIdUseCase
 ) : ViewModel() {
 

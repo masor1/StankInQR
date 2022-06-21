@@ -1,14 +1,15 @@
 package com.masorone.stankinqrapp.data.cloud
 
 import com.masorone.stankinqrapp.data.MachineData
+import javax.inject.Inject
 
-interface MachineCloudDataStore {
+interface MachineCloudDataSource {
 
     suspend fun fetch(id: String): MachineData
 
-    class Base(
+    class Base @Inject constructor(
         private val machineApiService: MachineApiService
-    ) : MachineCloudDataStore {
+    ) : MachineCloudDataSource {
 
         override suspend fun fetch(id: String) = try {
             machineApiService.fetch(id)[0].map()

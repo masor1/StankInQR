@@ -1,6 +1,8 @@
 package com.masorone.stankinqrapp.domain
 
-class FetchByIdUseCase(
+import javax.inject.Inject
+
+class FetchByIdUseCase @Inject constructor(
     private val repository: MachineRepository
 ) {
 

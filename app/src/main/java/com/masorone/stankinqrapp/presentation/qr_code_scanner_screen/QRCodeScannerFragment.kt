@@ -8,23 +8,30 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.budiyev.android.codescanner.*
+import com.masorone.stankinqrapp.App
 import com.masorone.stankinqrapp.R
-import com.masorone.stankinqrapp.data.MachineRepositoryBase
-import com.masorone.stankinqrapp.data.cloud.MachineCloudDataStore
-import com.masorone.stankinqrapp.data.cloud.MachineRetrofitBuilder
 import com.masorone.stankinqrapp.databinding.FragmentQrCodeScannerBinding
-import com.masorone.stankinqrapp.domain.FetchByIdUseCase
 import com.masorone.stankinqrapp.presentation.MachineUI
 import com.masorone.stankinqrapp.presentation.ViewModelFactory
-import retrofit2.converter.gson.GsonConverterFactory
+import javax.inject.Inject
 
 class QRCodeScannerFragment : Fragment() {
 
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
+
+    private lateinit var codeScanner: CodeScanner
+    private lateinit var viewModel: QRCodeScannerViewModel
+
     private var _binding: FragmentQrCodeScannerBinding? = null
     private val binding get() = _binding!!
+
+    private val appComponent by lazy {
+        (requireActivity().application as App).appComponent
+    }
 
     private val permReqLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) {
@@ -40,22 +47,6 @@ class QRCodeScannerFragment : Fragment() {
             }
         }
 
-    private lateinit var codeScanner: CodeScanner
-
-    private val viewModel: QRCodeScannerViewModel by viewModels {
-        ViewModelFactory(
-            FetchByIdUseCase(
-                MachineRepositoryBase(
-                    MachineCloudDataStore.Base(
-                        MachineRetrofitBuilder(
-                            GsonConverterFactory.create()
-                        ).apiService
-                    )
-                )
-            )
-        )
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -66,15 +57,24 @@ class QRCodeScannerFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        appComponent.inject(this)
         super.onViewCreated(view, savedInstanceState)
         codeScanner = CodeScanner(requireContext(), binding.scanner)
         permReqLauncher.launch(android.Manifest.permission.CAMERA)
     }
 
     private fun start() {
+        setupViewModel()
         setupCodeScanner()
         handleCodeScanner()
         observeCodeScannerValue()
+    }
+
+    private fun setupViewModel() {
+        viewModel = ViewModelProvider(
+            this,
+            viewModelFactory
+        )[QRCodeScannerViewModel::class.java]
     }
 
     private fun setupCodeScanner() {
