@@ -18,6 +18,7 @@
         android:layout_gravity="start"
         android:layout_margin="8dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+        android:textColor="@color/black"
         tools:text="12" />
 
     <androidx.appcompat.widget.AppCompatTextView
@@ -27,5 +28,6 @@
         android:layout_gravity="end"
         android:layout_margin="8dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+        android:textColor="@color/black"
         tools:text="Machine 12" />
 </androidx.cardview.widget.CardView>
