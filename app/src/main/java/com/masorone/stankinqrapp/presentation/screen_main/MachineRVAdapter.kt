@@ -1,7 +1,12 @@
 package com.masorone.stankinqrapp.presentation.screen_main
 
+import android.text.Layout
+import android.view.Gravity
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
@@ -30,9 +35,14 @@ class MachineRVAdapter :
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(machine: MachineUI) {
-            val dataList = machine.show().split("|")
-            binding.machineItemId.text = dataList[0]
-            binding.machineItemName.text = dataList[1]
+            if (machine is MachineUI.Success) {
+                val dataList = machine.show().split("|")
+                binding.machineItemId.text = dataList[0]
+                binding.machineItemName.text = dataList[1]
+            } else {
+                binding.machineItemId.text = machine.show()
+                binding.machineItemName.text = ""
+            }
         }
     }
 }
