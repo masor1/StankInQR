@@ -1,20 +1,15 @@
 package com.masorone.stankinqrapp.presentation.screen_main
 
-import android.text.Layout
-import android.view.Gravity
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
-import android.widget.TextView
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import androidx.viewbinding.ViewBinding
 import com.masorone.stankinqrapp.databinding.MachineItemBinding
 import com.masorone.stankinqrapp.presentation.MachineUI
 
-class MachineRVAdapter :
-    ListAdapter<MachineUI, MachineRVAdapter.MachineViewHolder>(MachineDiffUtilItem()) {
+class MachineRVAdapter(
+    private val onItemClick: (id: Int) -> Unit
+) : ListAdapter<MachineUI, MachineRVAdapter.MachineViewHolder>(MachineDiffUtilItem()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MachineViewHolder {
         val binding = MachineItemBinding.inflate(
@@ -39,6 +34,9 @@ class MachineRVAdapter :
                 val dataList = machine.show().split("|")
                 binding.machineItemId.text = dataList[0]
                 binding.machineItemName.text = dataList[1]
+                binding.root.setOnClickListener {
+                    onItemClick.invoke(dataList[0].toInt())
+                }
             } else {
                 binding.machineItemId.text = machine.show()
                 binding.machineItemName.text = ""

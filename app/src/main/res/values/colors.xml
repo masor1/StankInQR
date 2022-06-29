@@ -8,7 +8,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="window_background">#FFFFFFFF</color>
-    <color name="machine_item">#FFFFFFFF</color>
+    <color name="machine_item">#EDE7F6</color>
     <color name="progress_layout">#C9000000</color>
     <color name="button_open_qr_code_scanner">#C9000000</color>
     <color name="line_1">#E6EE9C</color>
