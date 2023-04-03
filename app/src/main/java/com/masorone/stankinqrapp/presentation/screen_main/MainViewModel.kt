@@ -6,10 +6,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.masorone.stankinqrapp.domain.FetchMachineListUseCase
 import com.masorone.stankinqrapp.presentation.MachineUI
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@HiltViewModel
 class MainViewModel @Inject constructor(
     private val fetchMachineListUseCase: FetchMachineListUseCase
 ) : ViewModel() {

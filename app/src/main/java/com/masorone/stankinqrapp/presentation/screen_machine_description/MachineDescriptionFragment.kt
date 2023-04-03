@@ -11,7 +11,9 @@ import com.bumptech.glide.Glide
 import com.masorone.stankinqrapp.R
 import com.masorone.stankinqrapp.databinding.FragmentMachineDescriptionBinding
 import com.masorone.stankinqrapp.presentation.MachineUI
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MachineDescriptionFragment : Fragment() {
 
     private var _binding: FragmentMachineDescriptionBinding? = null

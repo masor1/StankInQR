@@ -13,7 +13,7 @@ interface MachineApiService {
 
     private companion object {
 
-        const val MACHINE_END_POINT = "/machine"
+        const val MACHINE_END_POINT = "/machine.json"
         const val ID = "id"
     }
 }

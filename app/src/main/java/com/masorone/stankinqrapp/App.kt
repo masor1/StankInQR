@@ -1,12 +1,7 @@
 package com.masorone.stankinqrapp
 
 import android.app.Application
-import com.masorone.stankinqrapp.di.DaggerAppComponent
+import dagger.hilt.android.HiltAndroidApp
 
-class App : Application() {
-
-    val appComponent by lazy {
-        DaggerAppComponent.factory()
-            .create(this)
-    }
-}
+@HiltAndroidApp
+class App : Application()

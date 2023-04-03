@@ -9,30 +9,22 @@ import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.budiyev.android.codescanner.*
-import com.masorone.stankinqrapp.App
 import com.masorone.stankinqrapp.R
 import com.masorone.stankinqrapp.databinding.FragmentQrCodeScannerBinding
 import com.masorone.stankinqrapp.presentation.MachineUI
-import com.masorone.stankinqrapp.presentation.ViewModelFactory
-import javax.inject.Inject
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class QRCodeScannerFragment : Fragment() {
 
-    @Inject
-    lateinit var viewModelFactory: ViewModelFactory
-
     private lateinit var codeScanner: CodeScanner
-    private lateinit var viewModel: QRCodeScannerViewModel
+    private val viewModel by viewModels<QRCodeScannerViewModel>()
 
     private var _binding: FragmentQrCodeScannerBinding? = null
     private val binding get() = _binding!!
-
-    private val appComponent by lazy {
-        (requireActivity().application as App).appComponent
-    }
 
     private val permReqLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) {
@@ -58,10 +50,11 @@ class QRCodeScannerFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        appComponent.inject(this)
         super.onViewCreated(view, savedInstanceState)
         codeScanner = CodeScanner(requireContext(), binding.scanner)
+
         permReqLauncher.launch(android.Manifest.permission.CAMERA)
+
         requireActivity().onBackPressedDispatcher.addCallback(
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
@@ -72,17 +65,9 @@ class QRCodeScannerFragment : Fragment() {
     }
 
     private fun start() {
-        setupViewModel()
         setupCodeScanner()
         handleCodeScanner()
         observeCodeScannerValue()
-    }
-
-    private fun setupViewModel() {
-        viewModel = ViewModelProvider(
-            this,
-            viewModelFactory
-        )[QRCodeScannerViewModel::class.java]
     }
 
     private fun setupCodeScanner() {

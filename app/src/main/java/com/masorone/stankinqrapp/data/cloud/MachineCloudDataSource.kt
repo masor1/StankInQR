@@ -1,5 +1,6 @@
 package com.masorone.stankinqrapp.data.cloud
 
+import android.util.Log
 import com.masorone.stankinqrapp.data.MachineData
 import javax.inject.Inject
 
@@ -24,6 +25,7 @@ interface MachineCloudDataSource {
                 machineDto.map()
             }
         } catch (e: Exception) {
+            Log.d("MachineCloudDataSource", "fetch: ${e.message}")
             listOf(MachineData.Error(e))
         }
     }

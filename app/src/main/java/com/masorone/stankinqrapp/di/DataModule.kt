@@ -7,27 +7,26 @@ import com.masorone.stankinqrapp.domain.MachineRepository
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
 import retrofit2.converter.gson.GsonConverterFactory
 
+@InstallIn(SingletonComponent::class)
 @Module
 interface DataModule {
 
     @Binds
-    @ApplicationScope
     fun bindMachineRepository(impl: MachineRepositoryBase): MachineRepository
 
     @Binds
-    @ApplicationScope
     fun bindMachineCloudDataSource(impl: MachineCloudDataSource.Base): MachineCloudDataSource
 
     companion object {
 
         @Provides
-        @ApplicationScope
         fun provideConverterFactory(): GsonConverterFactory = GsonConverterFactory.create()
 
         @Provides
-        @ApplicationScope
         fun provideMachineApiService(
             converterFactory: GsonConverterFactory
         ) = MachineRetrofitBuilder(
