@@ -11,10 +11,11 @@ sealed class MachineData {
     data class Success(
         private val id: String,
         private val name: String,
-        private val imageUrl: String
+        private val imageUrl: String,
+        private val description: String
     ) : MachineData() {
 
-        override fun map() = MachineDomain.Success(id, name, imageUrl)
+        override fun map() = MachineDomain.Success(id, name, imageUrl, description)
     }
 
     data class Error(

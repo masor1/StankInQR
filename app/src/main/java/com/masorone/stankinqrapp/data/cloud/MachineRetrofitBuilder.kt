@@ -17,6 +17,6 @@ class MachineRetrofitBuilder @Inject constructor(
 
     private companion object {
 
-        const val BASE_URL = "https://bda2-213-33-195-2.eu.ngrok.io/"
+        const val BASE_URL = "https://9121-2a00-1370-81ac-d35d-dcba-9d84-eaeb-91d.eu.ngrok.io/"
     }
 }

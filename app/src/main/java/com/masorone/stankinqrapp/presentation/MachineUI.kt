@@ -15,10 +15,11 @@ sealed class MachineUI {
     data class Success(
         private val id: String,
         private val name: String,
-        private val imageUrl: String
+        private val imageUrl: String,
+        private val description: String,
     ) : MachineUI(), Parcelable {
 
-        override fun show() = "$id|$name|$imageUrl"
+        override fun show() = "$id|$name|$imageUrl|$description"
 
         override fun areItemsTheSame(newItem: MachineUI) = id == (newItem as Success).id
 

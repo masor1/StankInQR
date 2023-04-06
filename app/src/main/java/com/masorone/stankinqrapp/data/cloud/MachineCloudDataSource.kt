@@ -1,5 +1,6 @@
 package com.masorone.stankinqrapp.data.cloud
 
+import android.util.Log
 import com.masorone.stankinqrapp.data.MachineData
 import javax.inject.Inject
 
@@ -14,7 +15,8 @@ interface MachineCloudDataSource {
     ) : MachineCloudDataSource {
 
         override suspend fun fetch(id: String) = try {
-            machineApiService.fetch(id)[0].map()
+            Log.d("MachineCloudDataSource", "fetch: $id")
+            machineApiService.fetch(id)[id.toInt() - 1].map()
         } catch (e: Exception) {
             MachineData.Error(e)
         }

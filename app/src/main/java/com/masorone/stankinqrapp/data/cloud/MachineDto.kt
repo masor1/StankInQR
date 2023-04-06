@@ -9,8 +9,10 @@ data class MachineDto(
     @SerializedName("name")
     private val name: String,
     @SerializedName("imageUrl")
-    private val imageUrl: String
+    private val imageUrl: String,
+    @SerializedName("description")
+    private val description: String
 ) {
 
-    fun map() = MachineData.Success(id, name, imageUrl)
+    fun map() = MachineData.Success(id, name, imageUrl, description)
 }
