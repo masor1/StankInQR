@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.masorone.stankinqrapp.R
 import com.masorone.stankinqrapp.databinding.FragmentMainBinding
+import com.masorone.stankinqrapp.presentation.MachineUI
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
