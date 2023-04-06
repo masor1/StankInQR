@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -37,11 +36,21 @@ class MainFragment : Fragment() {
             findNavController().navigate(R.id.action_mainFragment_to_QRCodeScannerFragment)
         }
         adapter = MachineRVAdapter { id ->
-            Toast.makeText(requireContext(), "$id", Toast.LENGTH_SHORT).show()
+            viewModel.navigate(id)
         }
         binding.mainRecyclerView.adapter = adapter
         viewModel.listOfMachine.observe(viewLifecycleOwner) { listOfMachineUI ->
             adapter.submitList(listOfMachineUI)
+        }
+        viewModel.machine.observe(viewLifecycleOwner) { machine ->
+            findNavController().navigate(
+                R.id.action_mainFragment_to_machineDescriptionFragment,
+                Bundle().apply {
+                    when (machine) {
+                        is MachineUI.Success -> putParcelable(MachineUI.SUCCESS, machine)
+                        is MachineUI.Error -> putParcelable(MachineUI.ERROR, machine)
+                    }
+                })
         }
         requireActivity().onBackPressedDispatcher.addCallback(
             object : OnBackPressedCallback(true) {

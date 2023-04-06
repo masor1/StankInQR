@@ -39,6 +39,7 @@ class MachineDescriptionFragment : Fragment() {
                 binding.machineIdValue.text = dataList[0]
                 binding.machineNameValue.text = dataList[1]
                 Glide.with(requireActivity()).load(dataList[2]).into(binding.machineIcon)
+                binding.machineDescription.text = dataList[3]
             }
             is MachineUI.Error -> {
                 binding.machineDescriptionLayout.visibility = View.GONE
@@ -56,7 +57,7 @@ class MachineDescriptionFragment : Fragment() {
         requireActivity().onBackPressedDispatcher.addCallback(
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
-                    findNavController().navigate(R.id.action_machineDescriptionFragment_to_QRCodeScannerFragment)
+                    findNavController().navigate(R.id.action_machineDescriptionFragment_to_mainFragment)
                 }
             }
         )

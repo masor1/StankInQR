@@ -9,9 +9,10 @@ sealed class MachineDomain {
     data class Success(
         private val id: String,
         private val name: String,
-        private val imageUrl: String
+        private val imageUrl: String,
+        private val description: String
     ) : MachineDomain() {
-        override fun map() = MachineUI.Success(id, name, imageUrl)
+        override fun map() = MachineUI.Success(id, name, imageUrl, description)
     }
 
     data class Error(
