@@ -5,13 +5,12 @@ import android.view.View
 import androidx.annotation.StringRes
 import androidx.viewbinding.ViewBinding
 import com.bumptech.glide.Glide
+import com.masorone.stankinqrapp.core.ShowBinding
 import com.masorone.stankinqrapp.databinding.FragmentMachineDescriptionBinding
 import com.masorone.stankinqrapp.databinding.MachineItemBinding
 import kotlinx.parcelize.Parcelize
 
-sealed interface MachineUi {
-
-    fun show(binding: ViewBinding)
+sealed interface MachineUi : ShowBinding<ViewBinding> {
 
     fun areItemsTheSame(newItem: MachineUi): Boolean
 

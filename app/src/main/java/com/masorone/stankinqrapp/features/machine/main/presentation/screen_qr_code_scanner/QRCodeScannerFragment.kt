@@ -80,10 +80,10 @@ class QRCodeScannerFragment : Fragment() {
             requireActivity().runOnUiThread {
                 binding.progressLayout.visibility = View.VISIBLE
             }
-            viewModel.fetch(qrCode)
+            viewModel.fetch(qrCode.text)
         }
         codeScanner.errorCallback = ErrorCallback {
-            viewModel.showError()
+            viewModel.show()
         }
         binding.scanner.setOnClickListener {
             codeScanner.startPreview()
