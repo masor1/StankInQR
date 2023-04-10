@@ -3,4 +3,8 @@
     <string name="id">ID</string>
     <string name="name">NAME</string>
     <string name="open_qr_code_scanner_screen_fab_desc">Open QR code scanner screen</string>
+    <string name="exception_service_unavailable">Service unavailable</string>
+    <string name="exception_not_found">Not found</string>
+    <string name="exception_generic">Something went wrong</string>
+    <string name="camera_permission">Access to the camera is required for the application to work</string>
 </resources>
