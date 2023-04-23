@@ -1,9 +1,7 @@
 package com.masorone.stankinqrapp.app.di
 
-import com.masorone.stankinqrapp.core.SuspendFetchAll
-import com.masorone.stankinqrapp.core.SuspendFetchById
-import com.masorone.stankinqrapp.features.machine.api.model.Machine
-import com.masorone.stankinqrapp.features.machine.api.model.Machines
+import com.masorone.stankinqrapp.app.features.machine.fetch_all_machines.impl.BaseFetchAllMachinesUseCase
+import com.masorone.stankinqrapp.features.machine.api.FetchAllMachinesUseCase
 import com.masorone.stankinqrapp.features.machine.main.data.MachineRepository
 import com.masorone.stankinqrapp.features.machine.main.data.cloud.MachineCloudDataSource
 import com.masorone.stankinqrapp.features.machine.main.data.cloud.ProvideMachineApiService
@@ -19,13 +17,13 @@ import retrofit2.converter.gson.GsonConverterFactory
 interface DataModule {
 
     @Binds
-    fun bindMachineRepositoryFetchById(impl: MachineRepository.Base): SuspendFetchById<String, Machine>
-
-    @Binds
-    fun bindMachineRepositoryFetchAll(impl: MachineRepository.Base): SuspendFetchAll<Machines>
+    fun bindMachineRepositoryFetchById(impl: MachineRepository.Base): MachineRepository
 
     @Binds
     fun bindMachineCloudDataSource(impl: MachineCloudDataSource.Base): MachineCloudDataSource
+
+    @Binds
+    fun bindFetchAllMachinesUseCase(impl: BaseFetchAllMachinesUseCase): FetchAllMachinesUseCase
 
     companion object {
 

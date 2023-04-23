@@ -19,7 +19,7 @@ class AllMachinesFragment : Fragment() {
     private var _binding: FragmentAllMachinesBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel by viewModels<FetchAllViewModel>()
+    private val viewModel by viewModels<FetchAllMachinesViewModel>()
     private lateinit var adapter: MachineRVAdapter
 
     override fun onCreateView(
@@ -33,37 +33,34 @@ class AllMachinesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        viewModel.fetch(savedInstanceState == null)
         binding.openQrCodeScannerButton.setOnClickListener {
             findNavController().navigate(R.id.action_mainFragment_to_QRCodeScannerFragment)
         }
         adapter = MachineRVAdapter { machineUi ->
-            viewModel.navigate(machineUi)
+            findNavController().navigate(
+                R.id.action_mainFragment_to_machineDescriptionFragment,
+                Bundle().apply {
+                    when (machineUi) {
+                        is MachineUi.Success -> putParcelable(MachineUi.SUCCESS, machineUi)
+                        is MachineUi.Error -> putParcelable(MachineUi.ERROR, machineUi)
+                    }
+                }
+            )
         }
         binding.allMachinesRecyclerView.adapter = adapter
-        viewModel.viewState.observe(viewLifecycleOwner) { viewState ->
+        viewModel.observe(viewLifecycleOwner) { viewState ->
             when (viewState) {
-                is FetchAllViewModel.ViewState.Loading -> {
+                is FetchAllMachinesViewModel.ViewState.Loading -> {
                     binding.allMachinesProgressBar.visibility = View.VISIBLE
                     binding.allMachinesRecyclerView.visibility = View.GONE
                     binding.openQrCodeScannerButton.visibility = View.GONE
                 }
-                is FetchAllViewModel.ViewState.Success -> {
-                    viewState.machines.invokeSubmitList(adapter)
+                is FetchAllMachinesViewModel.ViewState.Success -> {
+                    adapter.submitList(viewState.machines)
                     binding.allMachinesProgressBar.visibility = View.GONE
                     binding.allMachinesRecyclerView.visibility = View.VISIBLE
                     binding.openQrCodeScannerButton.visibility = View.VISIBLE
-                }
-                is FetchAllViewModel.ViewState.Navigate -> {
-                    findNavController().navigate(
-                        R.id.action_mainFragment_to_machineDescriptionFragment,
-                        Bundle().apply {
-                            when (val machines = viewState.machine) {
-                                is MachineUi.Success -> putParcelable(MachineUi.SUCCESS, machines)
-                                is MachineUi.Error -> putParcelable(MachineUi.ERROR, machines)
-                            }
-                        }
-                    )
                 }
             }
         }

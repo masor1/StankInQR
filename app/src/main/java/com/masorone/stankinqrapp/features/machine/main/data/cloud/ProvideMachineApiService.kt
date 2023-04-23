@@ -17,6 +17,6 @@ class ProvideMachineApiService @Inject constructor(
 
     private companion object {
 
-        const val BASE_URL = "https://c139-2a00-1370-81ac-d35d-82e-be46-5fbf-ba52.ngrok-free.app/"
+        const val BASE_URL = "https://bee9-2a00-1370-81ac-d35d-f1f5-1e53-23bb-516b.ngrok-free.app/"
     }
 }

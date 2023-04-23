@@ -35,10 +35,6 @@ class MachineDescriptionFragment : Fragment() {
 
         machine.show(binding)
 
-        binding.machineIcon.setOnClickListener {
-            findNavController().navigate(R.id.action_machineDescriptionFragment_to_QRCodeScannerFragment)
-        }
-
         requireActivity().onBackPressedDispatcher.addCallback(
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
