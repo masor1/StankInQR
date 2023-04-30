@@ -1,19 +1,19 @@
 package com.masorone.stankinqrapp.features.machine.main.data.cloud
 
+import com.masorone.stankinqrapp.core.Provide
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Inject
 
 class ProvideMachineApiService @Inject constructor(
     private val converterFactory: GsonConverterFactory
-) {
+) : Provide<MachineApiService> {
 
-    val apiService: MachineApiService = buildRetrofit().create(MachineApiService::class.java)
-
-    private fun buildRetrofit() = Retrofit.Builder()
+    override fun provide(): MachineApiService = Retrofit.Builder()
         .baseUrl(BASE_URL)
         .addConverterFactory(converterFactory)
         .build()
+        .create(MachineApiService::class.java)
 
     private companion object {
 

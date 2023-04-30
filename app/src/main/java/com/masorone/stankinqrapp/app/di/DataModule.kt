@@ -3,6 +3,7 @@ package com.masorone.stankinqrapp.app.di
 import com.masorone.stankinqrapp.app.features.machine.fetch_all_machines.impl.BaseFetchAllMachinesUseCase
 import com.masorone.stankinqrapp.features.machine.api.FetchAllMachinesUseCase
 import com.masorone.stankinqrapp.features.machine.main.data.MachineRepository
+import com.masorone.stankinqrapp.features.machine.main.data.cloud.MachineApiService
 import com.masorone.stankinqrapp.features.machine.main.data.cloud.MachineCloudDataSource
 import com.masorone.stankinqrapp.features.machine.main.data.cloud.ProvideMachineApiService
 import dagger.Binds
@@ -33,8 +34,8 @@ interface DataModule {
         @Provides
         fun provideMachineApiService(
             converterFactory: GsonConverterFactory
-        ) = ProvideMachineApiService(
+        ): MachineApiService = ProvideMachineApiService(
             converterFactory
-        ).apiService
+        ).provide()
     }
 }

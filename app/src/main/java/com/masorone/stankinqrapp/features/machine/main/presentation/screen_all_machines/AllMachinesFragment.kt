@@ -56,7 +56,7 @@ class AllMachinesFragment : Fragment() {
                     binding.allMachinesRecyclerView.visibility = View.GONE
                     binding.openQrCodeScannerButton.visibility = View.GONE
                 }
-                is FetchAllMachinesViewModel.ViewState.Success -> {
+                is FetchAllMachinesViewModel.ViewState.Result -> {
                     adapter.submitList(viewState.machines)
                     binding.allMachinesProgressBar.visibility = View.GONE
                     binding.allMachinesRecyclerView.visibility = View.VISIBLE

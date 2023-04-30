@@ -33,7 +33,7 @@ class FetchAllMachinesViewModel @Inject constructor(
             allMachinesCommunication.show(ViewState.Loading)
             viewModelScope.launch(dispatchersList.io()) {
                 allMachinesCommunication.show(
-                    ViewState.Success(fetchAllMachinesUseCase.fetch().map { machine ->
+                    ViewState.Result(fetchAllMachinesUseCase.fetch().map { machine ->
                         machine.map()
                     })
                 )
@@ -45,6 +45,6 @@ class FetchAllMachinesViewModel @Inject constructor(
 
         object Loading : ViewState
 
-        data class Success(val machines: List<MachineUi>) : ViewState
+        data class Result(val machines: List<MachineUi>) : ViewState
     }
 }

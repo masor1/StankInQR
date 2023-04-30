@@ -15,7 +15,7 @@ import kotlinx.coroutines.test.*
 import org.junit.Test
 
 @OptIn(ExperimentalCoroutinesApi::class)
-class FetchAllViewModelTest {
+class FetchAllMachinesViewModelTest {
 
     @Test
     fun `test fetch all machines success`() = runBlocking {
@@ -45,7 +45,7 @@ class FetchAllViewModelTest {
         viewModel.fetch(true)
         assertEquals(1, fetchAllMachinesUseCase.fetchCount)
         assertEquals(
-            FetchAllMachinesViewModel.ViewState.Success(
+            FetchAllMachinesViewModel.ViewState.Result(
                 listOf(
                     MachineUi.Success("1", "name 1", "url 1", "description 1"),
                     MachineUi.Success("2", "name 2", "url 2", "description 2"),
@@ -82,7 +82,7 @@ class FetchAllViewModelTest {
         viewModel.fetch(true)
         assertEquals(1, fetchAllMachinesUseCase.fetchCount)
         assertEquals(
-            FetchAllMachinesViewModel.ViewState.Success(
+            FetchAllMachinesViewModel.ViewState.Result(
                 listOf(
                     MachineUi.Error(R.string.exception_service_unavailable)
                 )
@@ -96,7 +96,7 @@ class FetchAllViewModelTest {
         viewModel.fetch(true)
         assertEquals(2, fetchAllMachinesUseCase.fetchCount)
         assertEquals(
-            FetchAllMachinesViewModel.ViewState.Success(
+            FetchAllMachinesViewModel.ViewState.Result(
                 listOf(
                     MachineUi.Error(R.string.exception_not_found)
                 )
@@ -110,7 +110,7 @@ class FetchAllViewModelTest {
         viewModel.fetch(true)
         assertEquals(3, fetchAllMachinesUseCase.fetchCount)
         assertEquals(
-            FetchAllMachinesViewModel.ViewState.Success(
+            FetchAllMachinesViewModel.ViewState.Result(
                 listOf(
                     MachineUi.Error(R.string.exception_generic)
                 )
