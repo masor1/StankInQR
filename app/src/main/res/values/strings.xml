@@ -7,4 +7,7 @@
     <string name="exception_not_found">Not found</string>
     <string name="exception_generic">Something went wrong</string>
     <string name="camera_permission">Access to the camera is required for the application to work</string>
+
+    <string name="error_message_unknown_qr_code_type">Unknown QR code type: %s</string>
+    <string name="error_message_json_cannot_be_used">This json cannot be used in this application</string>
 </resources>

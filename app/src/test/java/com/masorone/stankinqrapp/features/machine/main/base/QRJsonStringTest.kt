@@ -1,13 +1,17 @@
 package com.masorone.stankinqrapp.features.machine.main.base
 
 import com.google.gson.Gson
+import com.masorone.stankinqrapp.core.ProvideResources
+import com.masorone.stankinqrapp.features.machine.main.BaseTest
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
+import com.masorone.stankinqrapp.R
 
-class QRJsonStringTest {
+class QRJsonStringTest : BaseTest() {
 
     private lateinit var gson: Gson
+    private lateinit var resources: ProvideResources<String>
 
     private val jsonNetworkInformation0 = "0"
     private val jsonNetworkInformation1 = "1"
@@ -55,11 +59,12 @@ class QRJsonStringTest {
     @Before
     fun setUp() {
         gson = Gson()
+        resources = FakeProvideString()
     }
 
     @Test
     fun `fetch Information model from json string included information type`() {
-        val qRJsonString = QRJsonString.Base(jsonInformation, gson)
+        val qRJsonString = QRJsonString.Base(jsonInformation, gson, resources)
         val actual = qRJsonString.model()
         val expected = QRJsonString.Model.Information(
             qrType = "Information",
@@ -73,7 +78,7 @@ class QRJsonStringTest {
 
     @Test
     fun `fetch StatisticData model from json string included statistic data type`() {
-        val qRJsonString = QRJsonString.Base(jsonStatisticData, gson)
+        val qRJsonString = QRJsonString.Base(jsonStatisticData, gson, resources)
         val actual = qRJsonString.model()
         val expected = QRJsonString.Model.StatisticData(
             qrType = "StatisticData",
@@ -87,28 +92,28 @@ class QRJsonStringTest {
 
     @Test
     fun `fetch Unknown model from json string included network information type`() {
-        var qRJsonString = QRJsonString.Base(jsonNetworkInformation0, gson)
+        var qRJsonString = QRJsonString.Base(jsonNetworkInformation0, gson, resources)
         var actual = qRJsonString.model()
         var expected: QRJsonString.Model =
-            QRJsonString.Model.Error("This json cannot be used in this application")
+            QRJsonString.Model.Error(resources.provide(R.string.error_message_json_cannot_be_used))
         assertEquals(expected, actual)
 
-        qRJsonString = QRJsonString.Base(jsonNetworkInformation1, gson)
+        qRJsonString = QRJsonString.Base(jsonNetworkInformation1, gson, resources)
         actual = qRJsonString.model()
         expected = QRJsonString.Model.NetworkInformation
         assertEquals(expected, actual)
 
-        qRJsonString = QRJsonString.Base(jsonNetworkInformation10, gson)
+        qRJsonString = QRJsonString.Base(jsonNetworkInformation10, gson, resources)
         actual = qRJsonString.model()
         expected = QRJsonString.Model.NetworkInformation
         assertEquals(expected, actual)
 
-        qRJsonString = QRJsonString.Base(jsonNetworkInformationMinus10, gson)
+        qRJsonString = QRJsonString.Base(jsonNetworkInformationMinus10, gson, resources)
         actual = qRJsonString.model()
-        expected = QRJsonString.Model.Error("This json cannot be used in this application")
+        expected = QRJsonString.Model.Error(resources.provide(R.string.error_message_json_cannot_be_used))
         assertEquals(expected, actual)
 
-        qRJsonString = QRJsonString.Base(jsonNetworkInformation132, gson)
+        qRJsonString = QRJsonString.Base(jsonNetworkInformation132, gson, resources)
         actual = qRJsonString.model()
         expected = QRJsonString.Model.NetworkInformation
         assertEquals(expected, actual)
@@ -116,22 +121,22 @@ class QRJsonStringTest {
 
     @Test
     fun `fetch Unknown model from json string included unknown type`() {
-        val qRJsonString = QRJsonString.Base(jsonUnknown1, gson)
+        val qRJsonString = QRJsonString.Base(jsonUnknown1, gson, resources)
         val actual = qRJsonString.model()
-        val expected = QRJsonString.Model.Unknown("unknown QR code type: LolKek")
+        val expected = QRJsonString.Model.Unknown(resources.provide(R.string.error_message_unknown_qr_code_type, "LolKek"))
         assertEquals(expected, actual)
     }
 
     @Test
     fun `fetch Unknown model from json string included error type`() {
-        var qRJsonString = QRJsonString.Base(jsonUnknown2, gson)
+        var qRJsonString = QRJsonString.Base(jsonUnknown2, gson, resources)
         var actual = qRJsonString.model()
-        var expected = QRJsonString.Model.Error("This json cannot be used in this application")
+        var expected = QRJsonString.Model.Error(resources.provide(R.string.error_message_json_cannot_be_used))
         assertEquals(expected, actual)
 
-        qRJsonString = QRJsonString.Base(nonJson, gson)
+        qRJsonString = QRJsonString.Base(nonJson, gson, resources)
         actual = qRJsonString.model()
-        expected = QRJsonString.Model.Error("This json cannot be used in this application")
+        expected = QRJsonString.Model.Error(resources.provide(R.string.error_message_json_cannot_be_used))
         assertEquals(expected, actual)
     }
 }

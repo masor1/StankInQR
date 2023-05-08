@@ -1,4 +1,4 @@
-package com.masorone.stankinqrapp.features.machine.main.presentation
+package com.masorone.stankinqrapp.core
 
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers

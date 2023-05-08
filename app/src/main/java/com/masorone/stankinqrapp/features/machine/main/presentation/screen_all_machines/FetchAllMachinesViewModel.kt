@@ -6,8 +6,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.masorone.stankinqrapp.core.FetchAll
 import com.masorone.stankinqrapp.features.machine.api.FetchAllMachinesUseCase
-import com.masorone.stankinqrapp.features.machine.main.presentation.Communication
-import com.masorone.stankinqrapp.features.machine.main.presentation.DispatchersList
+import com.masorone.stankinqrapp.core.Communication
+import com.masorone.stankinqrapp.core.DispatchersList
 import com.masorone.stankinqrapp.features.machine.main.presentation.MachineUi
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -18,7 +18,7 @@ class FetchAllMachinesViewModel @Inject constructor(
     private val fetchAllMachinesUseCase: FetchAllMachinesUseCase,
     private val allMachinesCommunication: Communication<ViewState>,
     private val dispatchersList: DispatchersList
-) : ViewModel(), FetchAll<Unit> {
+) : ViewModel(), FetchAll {
 
     init {
         allMachinesCommunication.show(ViewState.Loading)

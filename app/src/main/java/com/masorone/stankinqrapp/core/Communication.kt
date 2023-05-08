@@ -1,4 +1,4 @@
-package com.masorone.stankinqrapp.features.machine.main.presentation
+package com.masorone.stankinqrapp.core
 
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData

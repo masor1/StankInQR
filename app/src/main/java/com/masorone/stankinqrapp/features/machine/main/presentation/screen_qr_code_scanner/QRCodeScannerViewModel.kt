@@ -1,35 +1,56 @@
 package com.masorone.stankinqrapp.features.machine.main.presentation.screen_qr_code_scanner
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.masorone.stankinqrapp.R
-import com.masorone.stankinqrapp.app.features.machine.fetch_machine_by_id.impl.BaseFetchMachineByIdUseCase
 import com.masorone.stankinqrapp.core.FetchById
 import com.masorone.stankinqrapp.core.Show
+import com.masorone.stankinqrapp.features.machine.api.FetchMachineByIdUseCase
+import com.masorone.stankinqrapp.core.Communication
+import com.masorone.stankinqrapp.core.DispatchersList
 import com.masorone.stankinqrapp.features.machine.main.presentation.MachineUi
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class QRCodeScannerViewModel @Inject constructor(
-    private val fetchMachineByIdUseCase: BaseFetchMachineByIdUseCase
+    private val fetchMachineByIdUseCase: FetchMachineByIdUseCase,
+    private val communication: Communication<ViewState>,
+    private val dispatchersList: DispatchersList
 ) : ViewModel(), FetchById<String>, Show {
 
-    private val _valueFromScanner = MutableLiveData<MachineUi>()
-    val valueFromScanner: LiveData<MachineUi> = _valueFromScanner
+    init {
+        init()
+    }
+
+    fun observe(owner: LifecycleOwner, observer: Observer<ViewState>) {
+        communication.observe(owner, observer)
+    }
 
     override fun fetch(id: String) {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(dispatchersList.io()) {
             val machine = fetchMachineByIdUseCase.fetch(id).map()
-            _valueFromScanner.postValue(machine)
+            communication.show(ViewState.NetworkInformation(machine))
         }
     }
 
     override fun show() {
-        _valueFromScanner.value = MachineUi.Error(R.string.exception_generic)
+        communication.show(ViewState.Error(MachineUi.Error(R.string.exception_generic)))
+    }
+
+    fun init() {
+        communication.show(ViewState.QrCodeScanning)
+    }
+
+    sealed interface ViewState {
+
+        object QrCodeScanning : ViewState
+
+        data class NetworkInformation(val machineUi: MachineUi) : ViewState
+
+        data class Error(val machineUi: MachineUi) : ViewState
     }
 }

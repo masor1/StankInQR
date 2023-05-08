@@ -1,6 +1,6 @@
 package com.masorone.stankinqrapp.core
 
-interface FetchAll<R> {
+interface FetchAll {
 
-    fun fetch(firstInstance: Boolean): R
+    fun fetch(firstInstance: Boolean)
 }

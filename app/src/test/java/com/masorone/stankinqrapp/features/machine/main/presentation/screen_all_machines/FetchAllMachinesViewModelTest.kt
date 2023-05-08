@@ -4,18 +4,15 @@ import com.masorone.stankinqrapp.R
 import com.masorone.stankinqrapp.features.machine.api.ErrorType
 import com.masorone.stankinqrapp.features.machine.api.FetchAllMachinesUseCase
 import com.masorone.stankinqrapp.features.machine.api.model.Machine
-import com.masorone.stankinqrapp.features.machine.main.presentation.Communication
-import com.masorone.stankinqrapp.features.machine.main.presentation.DispatchersList
+import com.masorone.stankinqrapp.features.machine.main.BaseTest
+import com.masorone.stankinqrapp.core.Communication
+import com.masorone.stankinqrapp.core.DispatchersList
 import com.masorone.stankinqrapp.features.machine.main.presentation.MachineUi
 import junit.framework.TestCase.assertEquals
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.test.*
 import org.junit.Test
 
-@OptIn(ExperimentalCoroutinesApi::class)
-class FetchAllMachinesViewModelTest {
+class FetchAllMachinesViewModelTest : BaseTest() {
 
     @Test
     fun `test fetch all machines success`() = runBlocking {
@@ -129,13 +126,6 @@ class FetchAllMachinesViewModelTest {
             fetchCount++
             return list
         }
-    }
-
-    private class FakeDispatchersList : DispatchersList {
-
-        override fun io(): CoroutineDispatcher = UnconfinedTestDispatcher()
-
-        override fun main(): CoroutineDispatcher = UnconfinedTestDispatcher()
     }
 
     private class FakeAllMachineCommunication :
