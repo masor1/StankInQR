@@ -11,13 +11,13 @@ import org.junit.Test
 class QRCodeScannerViewModelTest : BaseTest() {
 
     private lateinit var viewModel: QRCodeScannerViewModel
-    private lateinit var fetchMachineByIdUseCase: FakeFetchAllMachinesUseCase
+    private lateinit var fetchMachineByIdUseCase: FakeFetchMachineByIdUseCase
     private lateinit var communication: FakeQrCodeScannerCommunication
     private lateinit var dispatchersList: DispatchersList
 
     @Before
     fun setup() {
-        fetchMachineByIdUseCase = FakeFetchAllMachinesUseCase()
+        fetchMachineByIdUseCase = FakeFetchMachineByIdUseCase()
         communication = FakeQrCodeScannerCommunication()
         dispatchersList = FakeDispatchersList()
         viewModel = QRCodeScannerViewModel(
@@ -32,7 +32,7 @@ class QRCodeScannerViewModelTest : BaseTest() {
 
     }
 
-    private class FakeFetchAllMachinesUseCase : FetchMachineByIdUseCase {
+    private class FakeFetchMachineByIdUseCase : FetchMachineByIdUseCase {
 
         lateinit var machine: Machine
 
