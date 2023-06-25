@@ -1,11 +1,11 @@
 package com.masorone.stankinqrapp.features.machine.main
 
-import com.masorone.stankinqrapp.core.ProvideResources
-import com.masorone.stankinqrapp.core.DispatchersList
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import com.masorone.stankinqrapp.R
+import com.masorone.stankinqrapp.core.android.DispatchersList
+import com.masorone.stankinqrapp.core.android.ProvideResources
 
 abstract class BaseTest {
 
@@ -18,13 +18,14 @@ abstract class BaseTest {
     }
 
     protected class FakeProvideString : ProvideResources<String> {
-
         var providingString = ""
 
         override fun provide(id: Int, value: String): String {
             return when(id) {
-                R.string.error_message_unknown_qr_code_type -> "Unknown QR code type: $value"
-                R.string.error_message_json_cannot_be_used -> "This json cannot be used in this application"
+                R.string.error_message_unknown_qr_code_type ->
+                    "Unknown QR code type: $value"
+                R.string.error_message_json_cannot_be_used ->
+                    "This json cannot be used in this application"
                 else -> providingString
             }
         }

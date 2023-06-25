@@ -1,12 +1,12 @@
 package com.masorone.stankinqrapp.features.machine.main.base
 
 import com.google.gson.Gson
-import com.masorone.stankinqrapp.core.ProvideResources
 import com.masorone.stankinqrapp.features.machine.main.BaseTest
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import com.masorone.stankinqrapp.R
+import com.masorone.stankinqrapp.core.android.ProvideResources
 
 class QRJsonStringTest : BaseTest() {
 
@@ -71,21 +71,7 @@ class QRJsonStringTest : BaseTest() {
             id = 1,
             name = "name",
             type = "F",
-            information = "information of item"
-        )
-        assertEquals(expected, actual)
-    }
-
-    @Test
-    fun `fetch StatisticData model from json string included statistic data type`() {
-        val qRJsonString = QRJsonString.Base(jsonStatisticData, gson, resources)
-        val actual = qRJsonString.model()
-        val expected = QRJsonString.Model.StatisticData(
-            qrType = "StatisticData",
-            id = 3,
-            name = "name 3",
-            type = "T",
-            information = "information of item"
+            company = "information of item"
         )
         assertEquals(expected, actual)
     }

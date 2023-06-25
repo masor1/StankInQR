@@ -5,12 +5,14 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.masorone.stankinqrapp.R
-import com.masorone.stankinqrapp.core.FetchById
-import com.masorone.stankinqrapp.core.Show
+import com.masorone.stankinqrapp.core.android.Communication
+import com.masorone.stankinqrapp.core.android.DispatchersList
+import com.masorone.stankinqrapp.core.main.FetchById
+import com.masorone.stankinqrapp.core.main.Show
 import com.masorone.stankinqrapp.features.machine.api.FetchMachineByIdUseCase
-import com.masorone.stankinqrapp.core.Communication
-import com.masorone.stankinqrapp.core.DispatchersList
+import com.masorone.stankinqrapp.features.machine.api.model.Machine
 import com.masorone.stankinqrapp.features.machine.main.presentation.MachineUi
+import com.masorone.stankinqrapp.features.machine.main.presentation.Mapper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -19,7 +21,8 @@ import javax.inject.Inject
 class QRCodeScannerViewModel @Inject constructor(
     private val fetchMachineByIdUseCase: FetchMachineByIdUseCase,
     private val communication: Communication<ViewState>,
-    private val dispatchersList: DispatchersList
+    private val dispatchersList: DispatchersList,
+    private val mapper: Mapper<Machine, MachineUi>
 ) : ViewModel(), FetchById<String>, Show {
 
     init {
@@ -32,13 +35,13 @@ class QRCodeScannerViewModel @Inject constructor(
 
     override fun fetch(id: String) {
         viewModelScope.launch(dispatchersList.io()) {
-            val machine = fetchMachineByIdUseCase.fetch(id).map()
+            val machine = mapper.map(fetchMachineByIdUseCase.fetch(id))
             communication.show(ViewState.NetworkInformation(machine))
         }
     }
 
     override fun show() {
-        communication.show(ViewState.Error(MachineUi.Error(R.string.exception_generic)))
+        communication.show(ViewState.Error(MachineUi.Error(""))) //TODO("fix string property in MachineUi.Error and use state")
     }
 
     fun init() {

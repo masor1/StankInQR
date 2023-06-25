@@ -4,11 +4,13 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.masorone.stankinqrapp.core.FetchAll
+import com.masorone.stankinqrapp.core.android.Communication
+import com.masorone.stankinqrapp.core.android.DispatchersList
+import com.masorone.stankinqrapp.core.main.FetchAll
 import com.masorone.stankinqrapp.features.machine.api.FetchAllMachinesUseCase
-import com.masorone.stankinqrapp.core.Communication
-import com.masorone.stankinqrapp.core.DispatchersList
+import com.masorone.stankinqrapp.features.machine.api.model.Machine
 import com.masorone.stankinqrapp.features.machine.main.presentation.MachineUi
+import com.masorone.stankinqrapp.features.machine.main.presentation.Mapper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -17,7 +19,8 @@ import javax.inject.Inject
 class FetchAllMachinesViewModel @Inject constructor(
     private val fetchAllMachinesUseCase: FetchAllMachinesUseCase,
     private val allMachinesCommunication: Communication<ViewState>,
-    private val dispatchersList: DispatchersList
+    private val dispatchersList: DispatchersList,
+    private val mapper: Mapper<Machine, MachineUi>
 ) : ViewModel(), FetchAll {
 
     init {
@@ -34,7 +37,7 @@ class FetchAllMachinesViewModel @Inject constructor(
             viewModelScope.launch(dispatchersList.io()) {
                 allMachinesCommunication.show(
                     ViewState.Result(fetchAllMachinesUseCase.fetch().map { machine ->
-                        machine.map()
+                        mapper.map(machine)
                     })
                 )
             }

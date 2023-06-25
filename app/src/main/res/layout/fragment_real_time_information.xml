@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:id="@+id/scroll_view_for_machine_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraint_layout_for_machine_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/machine_image"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:contentDescription="@string/machine_image"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_launcher_background"
+                app:layout_constraintBottom_toTopOf="@id/guideline_40_percents"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline_40_percents"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.42" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline_32_percents"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.38" />
+
+            <View
+                android:id="@+id/_bottom_sheet_layout"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:background="@drawable/bottom_sheet_background"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/guideline_32_percents" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/_card_view_base_information"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="4dp"
+                app:cardUseCompatPadding="true"
+                app:layout_constraintEnd_toEndOf="@id/_bottom_sheet_layout"
+                app:layout_constraintStart_toStartOf="@id/_bottom_sheet_layout"
+                app:layout_constraintTop_toTopOf="@id/_bottom_sheet_layout">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_marginHorizontal="8dp"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/machine_id"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:gravity="center|left"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        tools:text="ID: 123" />
+
+                    <TextView
+                        android:id="@+id/machine_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:gravity="center|left"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        tools:text="Name: 123" />
+
+                    <TextView
+                        android:id="@+id/machine_company"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:gravity="center|left"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        tools:text="Company: 123" />
+
+                    <TextView
+                        android:id="@+id/machine_type"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:gravity="center|left"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        tools:text="Type: 123" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_view_real_time_information"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="4dp"
+                app:cardUseCompatPadding="true"
+                app:layout_constraintEnd_toEndOf="@id/_bottom_sheet_layout"
+                app:layout_constraintStart_toStartOf="@id/_bottom_sheet_layout"
+                app:layout_constraintTop_toBottomOf="@id/_card_view_base_information">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="8dp"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/machine_spindle_rotation_speed"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:gravity="center|left"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        tools:text="Скорость вращения шпинделя: 123" />
+
+                    <TextView
+                        android:id="@+id/machine_feed_rate"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:gravity="center|left"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        tools:text="Скорость подачи: 123" />
+
+                    <TextView
+                        android:id="@+id/machine_number_of_processed_parts"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:gravity="center|left"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        tools:text="Количество обработанных деталей: 123" />
+
+                    <TextView
+                        android:id="@+id/machine_temperature"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:gravity="center|left"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        tools:text="Температура: 123" />
+
+                    <TextView
+                        android:id="@+id/machine_vibration"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:gravity="center|left"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        tools:text="Вибрация: 123" />
+
+                    <TextView
+                        android:id="@+id/machine_po"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:gravity="center|left"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        android:visibility="gone"
+                        tools:text="Погрешность: 123" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_view_economy"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="4dp"
+                app:cardUseCompatPadding="true"
+                app:layout_constraintEnd_toEndOf="@id/_bottom_sheet_layout"
+                app:layout_constraintStart_toStartOf="@id/_bottom_sheet_layout"
+                app:layout_constraintTop_toBottomOf="@id/card_view_real_time_information">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginHorizontal="8dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/machine_engine_hours"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:gravity="center|left"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        tools:text="Моточасы: 123" />
+
+                    <TextView
+                        android:id="@+id/machine_residual_value"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:gravity="center|left"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        tools:text="Остаточная стоимость: 123" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/card_view_documentation_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="4dp"
+                app:cardUseCompatPadding="true"
+                app:layout_constraintEnd_toEndOf="@id/_bottom_sheet_layout"
+                app:layout_constraintStart_toStartOf="@id/_bottom_sheet_layout"
+                app:layout_constraintTop_toBottomOf="@id/card_view_economy"
+                app:rippleColor="@color/machine_item">
+
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/machine_documentation"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginHorizontal="8dp"
+                    android:gravity="center|left"
+                    android:text="Документация"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="center|end"
+                    android:layout_marginHorizontal="16dp"
+                    android:contentDescription="@string/link_icon"
+                    android:src="@drawable/ic_launch_24" />
+            </com.google.android.material.card.MaterialCardView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+    <FrameLayout
+        android:id="@+id/progress_bar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:visibility="gone">
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" />
+    </FrameLayout>
+</FrameLayout>

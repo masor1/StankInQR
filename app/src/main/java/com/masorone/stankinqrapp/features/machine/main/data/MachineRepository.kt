@@ -1,12 +1,13 @@
 package com.masorone.stankinqrapp.features.machine.main.data
 
-import com.masorone.stankinqrapp.core.SuspendFetchAll
-import com.masorone.stankinqrapp.core.SuspendFetchById
+import com.masorone.stankinqrapp.core.main.SuspendFetchAll
+import com.masorone.stankinqrapp.core.main.SuspendFetchById
 import com.masorone.stankinqrapp.features.machine.api.model.Machine
 import com.masorone.stankinqrapp.features.machine.main.data.cloud.MachineCloudDataSource
 import javax.inject.Inject
 
-interface MachineRepository : SuspendFetchAll<List<Machine>>, SuspendFetchById<String, Machine> {
+interface MachineRepository : SuspendFetchAll<List<Machine>>,
+    SuspendFetchById<String, Machine> {
 
     class Base @Inject constructor(
         private val cloudDataSource: MachineCloudDataSource

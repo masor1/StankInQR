@@ -1,8 +1,8 @@
 package com.masorone.stankinqrapp.features.machine.main.data.cloud
 
 import android.util.Log
-import com.masorone.stankinqrapp.core.SuspendFetchAll
-import com.masorone.stankinqrapp.core.SuspendFetchById
+import com.masorone.stankinqrapp.core.main.SuspendFetchAll
+import com.masorone.stankinqrapp.core.main.SuspendFetchById
 import com.masorone.stankinqrapp.features.machine.main.data.cloud.model.MachineCloud
 import javax.inject.Inject
 

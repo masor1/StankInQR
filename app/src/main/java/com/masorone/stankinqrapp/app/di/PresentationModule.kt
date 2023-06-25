@@ -1,8 +1,8 @@
 package com.masorone.stankinqrapp.app.di
 
+import com.masorone.stankinqrapp.core.android.Communication
+import com.masorone.stankinqrapp.core.android.DispatchersList
 import com.masorone.stankinqrapp.features.machine.main.presentation.screen_all_machines.AllMachinesCommunication
-import com.masorone.stankinqrapp.core.Communication
-import com.masorone.stankinqrapp.core.DispatchersList
 import com.masorone.stankinqrapp.features.machine.main.presentation.screen_all_machines.FetchAllMachinesViewModel
 import com.masorone.stankinqrapp.features.machine.main.presentation.screen_qr_code_scanner.QRCodeScannerViewModel
 import com.masorone.stankinqrapp.features.machine.main.presentation.screen_qr_code_scanner.QrCodeScannerCommunication

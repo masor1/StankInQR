@@ -15,3 +15,6 @@ dependencyResolutionManagement {
 }
 rootProject.name = "StankInQR"
 include ':app'
+include ':core:android'
+include ':core:main'
+include ':features:machine:api'

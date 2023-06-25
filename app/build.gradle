@@ -40,6 +40,10 @@ android {
 
 dependencies {
 
+    api(project(':core:main'))
+    api(project(':core:android'))
+    api(project(':features:machine:api'))
+
     def hiltVersion = "2.44"
     def navigationVersion = "2.5.3"
     def coroutines_version = "1.6.4"

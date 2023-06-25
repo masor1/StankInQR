@@ -1,6 +1,6 @@
 package com.masorone.stankinqrapp.features.machine.main.data.cloud
 
-import com.masorone.stankinqrapp.core.Provide
+import com.masorone.stankinqrapp.core.main.Provide
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Inject
@@ -17,6 +17,6 @@ class ProvideMachineApiService @Inject constructor(
 
     private companion object {
 
-        const val BASE_URL = "https://bee9-2a00-1370-81ac-d35d-f1f5-1e53-23bb-516b.ngrok-free.app/"
+        const val BASE_URL = "https://ea6f-2a00-1370-81ac-d35d-ad72-5cfe-5249-fb17.ngrok-free.app/"
     }
 }

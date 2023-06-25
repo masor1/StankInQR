@@ -2,8 +2,10 @@ package com.masorone.stankinqrapp.app.di
 
 import com.masorone.stankinqrapp.app.features.machine.fetch_all_machines.impl.BaseFetchAllMachinesUseCase
 import com.masorone.stankinqrapp.app.features.machine.fetch_machine_by_id.impl.BaseFetchMachineByIdUseCase
+import com.masorone.stankinqrapp.app.features.machine.fetch_real_time_data.impl.BaseFetchRealTimeDataUseCase
 import com.masorone.stankinqrapp.features.machine.api.FetchAllMachinesUseCase
 import com.masorone.stankinqrapp.features.machine.api.FetchMachineByIdUseCase
+import com.masorone.stankinqrapp.features.machine.api.FetchRealTimeDataUseCase
 import com.masorone.stankinqrapp.features.machine.main.data.MachineRepository
 import com.masorone.stankinqrapp.features.machine.main.data.cloud.MachineApiService
 import com.masorone.stankinqrapp.features.machine.main.data.cloud.MachineCloudDataSource
@@ -27,8 +29,12 @@ interface DataModule {
 
     @Binds
     fun bindFetchAllMachinesUseCase(impl: BaseFetchAllMachinesUseCase): FetchAllMachinesUseCase
+
     @Binds
     fun bindFetchMachineByIdUseCase(impl: BaseFetchMachineByIdUseCase): FetchMachineByIdUseCase
+
+    @Binds
+    fun bindFetchRealTimeDataUseCase(impl: BaseFetchRealTimeDataUseCase): FetchRealTimeDataUseCase
 
     companion object {
 

@@ -1,54 +1,68 @@
 package com.masorone.stankinqrapp.features.machine.main.presentation.screen_all_machines
 
 import com.masorone.stankinqrapp.R
+import com.masorone.stankinqrapp.core.android.Communication
+import com.masorone.stankinqrapp.core.android.ProvideResources
 import com.masorone.stankinqrapp.features.machine.api.ErrorType
 import com.masorone.stankinqrapp.features.machine.api.FetchAllMachinesUseCase
 import com.masorone.stankinqrapp.features.machine.api.model.Machine
 import com.masorone.stankinqrapp.features.machine.main.BaseTest
-import com.masorone.stankinqrapp.core.Communication
-import com.masorone.stankinqrapp.core.DispatchersList
+import com.masorone.stankinqrapp.features.machine.main.presentation.MachineToMachineUiMapper
 import com.masorone.stankinqrapp.features.machine.main.presentation.MachineUi
+import com.masorone.stankinqrapp.features.machine.main.presentation.Mapper
 import junit.framework.TestCase.assertEquals
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runTest
+import org.junit.Before
 import org.junit.Test
 
+@OptIn(ExperimentalCoroutinesApi::class)
 class FetchAllMachinesViewModelTest : BaseTest() {
 
-    @Test
-    fun `test fetch all machines success`() = runBlocking {
-        val fetchAllMachinesUseCase = FakeFetchAllMachinesUseCase()
-        val allMachinesCommunication: Communication.Fake<FetchAllMachinesViewModel.ViewState> =
-            FakeAllMachineCommunication()
+    private lateinit var fetchAllMachinesUseCase: FakeFetchAllMachinesUseCase
+    private lateinit var allMachinesCommunication: FakeAllMachineCommunication
+    private lateinit var dispatchers: FakeDispatchersList
+    private lateinit var viewModel: FetchAllMachinesViewModel
+    private lateinit var provideResources: ProvideResources<String>
+    private lateinit var mapper: Mapper<Machine, MachineUi>
 
-        val dispatchers: DispatchersList = FakeDispatchersList()
-
-        val viewModel = FetchAllMachinesViewModel(
+    @Before
+    fun setUp() {
+        fetchAllMachinesUseCase = FakeFetchAllMachinesUseCase()
+        allMachinesCommunication = FakeAllMachineCommunication()
+        dispatchers = FakeDispatchersList()
+        provideResources = FakeProvideString()
+        mapper = MachineToMachineUiMapper(provideResources)
+        viewModel = FetchAllMachinesViewModel(
             fetchAllMachinesUseCase,
             allMachinesCommunication,
-            dispatchers
+            dispatchers,
+            mapper
         )
+    }
 
+    @Test
+    fun `test fetch all machines success`() = runTest {
         assertEquals(
             FetchAllMachinesViewModel.ViewState.Loading,
             allMachinesCommunication.state
         )
         assertEquals(0, fetchAllMachinesUseCase.fetchCount)
-
         fetchAllMachinesUseCase.list = listOf(
             Machine.Success("1", "name 1", "url 1", "description 1"),
             Machine.Success("2", "name 2", "url 2", "description 2"),
             Machine.Success("3", "name 3", "url 3", "description 3")
         )
         viewModel.fetch(true)
+        val expected = listOf(
+            MachineUi.Success("1", "name 1", "url 1", "description 1"),
+            MachineUi.Success("2", "name 2", "url 2", "description 2"),
+            MachineUi.Success("3", "name 3", "url 3", "description 3")
+        )
         assertEquals(1, fetchAllMachinesUseCase.fetchCount)
         assertEquals(
-            FetchAllMachinesViewModel.ViewState.Result(
-                listOf(
-                    MachineUi.Success("1", "name 1", "url 1", "description 1"),
-                    MachineUi.Success("2", "name 2", "url 2", "description 2"),
-                    MachineUi.Success("3", "name 3", "url 3", "description 3")
-                )
-            ),
+            FetchAllMachinesViewModel.ViewState.Result(expected),
             allMachinesCommunication.state
         )
         viewModel.fetch(false)
@@ -57,18 +71,6 @@ class FetchAllMachinesViewModelTest : BaseTest() {
 
     @Test
     fun `test fetch all machines error`() = runBlocking {
-        val fetchAllMachinesUseCase = FakeFetchAllMachinesUseCase()
-        val allMachinesCommunication: Communication.Fake<FetchAllMachinesViewModel.ViewState> =
-            FakeAllMachineCommunication()
-
-        val dispatchers: DispatchersList = FakeDispatchersList()
-
-        val viewModel = FetchAllMachinesViewModel(
-            fetchAllMachinesUseCase,
-            allMachinesCommunication,
-            dispatchers
-        )
-
         assertEquals(
             FetchAllMachinesViewModel.ViewState.Loading,
             allMachinesCommunication.state
@@ -81,7 +83,7 @@ class FetchAllMachinesViewModelTest : BaseTest() {
         assertEquals(
             FetchAllMachinesViewModel.ViewState.Result(
                 listOf(
-                    MachineUi.Error(R.string.exception_service_unavailable)
+                    MachineUi.Error(provideResources.provide(R.string.exception_service_unavailable))
                 )
             ),
             allMachinesCommunication.state
@@ -95,7 +97,7 @@ class FetchAllMachinesViewModelTest : BaseTest() {
         assertEquals(
             FetchAllMachinesViewModel.ViewState.Result(
                 listOf(
-                    MachineUi.Error(R.string.exception_not_found)
+                    MachineUi.Error(provideResources.provide(R.string.exception_not_found))
                 )
             ),
             allMachinesCommunication.state
@@ -109,7 +111,7 @@ class FetchAllMachinesViewModelTest : BaseTest() {
         assertEquals(
             FetchAllMachinesViewModel.ViewState.Result(
                 listOf(
-                    MachineUi.Error(R.string.exception_generic)
+                    MachineUi.Error(provideResources.provide(R.string.exception_generic))
                 )
             ),
             allMachinesCommunication.state

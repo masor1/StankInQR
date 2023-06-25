@@ -15,7 +15,7 @@ import androidx.navigation.fragment.findNavController
 import com.budiyev.android.codescanner.*
 import com.google.gson.Gson
 import com.masorone.stankinqrapp.R
-import com.masorone.stankinqrapp.core.ProvideResources
+import com.masorone.stankinqrapp.core.android.ProvideResources
 import com.masorone.stankinqrapp.databinding.FragmentQrCodeScannerBinding
 import com.masorone.stankinqrapp.features.machine.main.base.QRJsonString
 import com.masorone.stankinqrapp.features.machine.main.presentation.MachineUi
@@ -90,30 +90,30 @@ class QRCodeScannerFragment : Fragment() {
         codeScanner.decodeCallback = DecodeCallback { qrCode ->
             requireActivity().runOnUiThread {
                 binding.progressLayout.visibility = View.VISIBLE
+                val model = QRJsonString.Base(
+                    qrCode.text,
+                    Gson(),
+                    provideStringResources
+                ).model()
 
-                qrJsonString = QRJsonString.Base(qrCode.text, Gson(), provideStringResources)
-                when (qrJsonString.model()) {
+                when (model) {
+                    is QRJsonString.Model.Information -> {
+                        findNavController().navigate(
+                            R.id.action_QRCodeScannerFragment_to_realTimeInformationFragment,
+                            Bundle().apply {
+                                putParcelable("key", model)
+                            }
+                        )
+                    }
                     is QRJsonString.Model.NetworkInformation -> viewModel.fetch(qrCode.text)
-                    is QRJsonString.Model.Information -> Toast.makeText(
-                        requireContext(),
-                        "Information",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                    is QRJsonString.Model.StatisticData -> Toast.makeText(
-                        requireContext(),
-                        "StatisticData",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                    is QRJsonString.Model.Unknown -> Toast.makeText(
-                        requireContext(),
-                        "Unknown",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                    is QRJsonString.Model.Error -> Toast.makeText(
-                        requireContext(),
-                        "Error",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    is QRJsonString.Model.Unknown -> {
+                        showToast("Unknown")
+                        viewModel.init()
+                    }
+                    is QRJsonString.Model.Error -> {
+                        showToast("Error")
+                        viewModel.init()
+                    }
                 }
             }
         }
@@ -125,6 +125,10 @@ class QRCodeScannerFragment : Fragment() {
         }
     }
 
+    private fun showToast(text: String) {
+        Toast.makeText(requireContext(), text, Toast.LENGTH_SHORT).show()
+    }
+
     private fun observeCodeScannerValue() {
         viewModel.observe(viewLifecycleOwner) { viewState ->
             when (viewState) {
@@ -134,7 +138,10 @@ class QRCodeScannerFragment : Fragment() {
                             R.id.action_QRCodeScannerFragment_to_machineDescriptionFragment,
                             Bundle().apply {
                                 when (val machine = viewState.machineUi) {
-                                    is MachineUi.Success -> putParcelable(MachineUi.SUCCESS, machine)
+                                    is MachineUi.Success -> putParcelable(
+                                        MachineUi.SUCCESS,
+                                        machine
+                                    )
                                     is MachineUi.Error -> putParcelable(MachineUi.ERROR, machine)
                                 }
                             }

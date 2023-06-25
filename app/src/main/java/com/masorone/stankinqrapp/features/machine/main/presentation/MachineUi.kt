@@ -5,7 +5,7 @@ import android.view.View
 import androidx.annotation.StringRes
 import androidx.viewbinding.ViewBinding
 import com.bumptech.glide.Glide
-import com.masorone.stankinqrapp.core.ShowBinding
+import com.masorone.stankinqrapp.core.android.ShowBinding
 import com.masorone.stankinqrapp.databinding.FragmentMachineDescriptionBinding
 import com.masorone.stankinqrapp.databinding.MachineItemBinding
 import kotlinx.parcelize.Parcelize
@@ -52,19 +52,19 @@ sealed interface MachineUi : ShowBinding<ViewBinding> {
     }
 
     @Parcelize
-    data class Error(@StringRes private val messageResId: Int) : Abstract(), Parcelable {
+    data class Error(private val messageResId: String) : Abstract(), Parcelable {
 
         override fun show(binding: ViewBinding) {
             when (binding) {
                 is MachineItemBinding -> {
-                    binding.machineItemId.text = binding.root.context.getText(messageResId)
+                    binding.machineItemId.text = messageResId
                     binding.machineItemName.text = ""
                 }
                 is FragmentMachineDescriptionBinding -> {
                     binding.machineDescriptionLayout.visibility = View.GONE
                     binding.errorTextLayout.apply {
                         visibility = View.VISIBLE
-                        text = binding.root.context.getText(messageResId)
+                        text = messageResId
                     }
                 }
             }

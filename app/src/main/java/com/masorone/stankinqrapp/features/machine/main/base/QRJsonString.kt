@@ -1,8 +1,10 @@
 package com.masorone.stankinqrapp.features.machine.main.base
 
+import android.os.Parcelable
 import com.google.gson.Gson
 import com.masorone.stankinqrapp.R
-import com.masorone.stankinqrapp.core.ProvideResources
+import com.masorone.stankinqrapp.core.android.ProvideResources
+import kotlinx.parcelize.Parcelize
 import org.json.JSONException
 import org.json.JSONObject
 
@@ -21,10 +23,6 @@ interface QRJsonString {
                 Model.Information.stringType -> gson.fromJson(
                     jsonString,
                     Model.Information::class.java
-                )
-                Model.StatisticData.stringType -> gson.fromJson(
-                    jsonString,
-                    Model.StatisticData::class.java
                 )
                 else -> Model.Unknown(
                     resources.provide(
@@ -52,31 +50,18 @@ interface QRJsonString {
 
         object NetworkInformation : Model
 
+        @Parcelize
         data class Information(
-            private val qrType: String,
-            private val id: Int,
-            private val name: String,
-            private val type: String,
-            private val information: String
-        ) : Model {
+            val qrType: String,
+            val id: Int,
+            val name: String,
+            val type: String,
+            val company: String
+        ) : Model, Parcelable {
 
             companion object {
 
                 val stringType: String = Information::class.java.simpleName
-            }
-        }
-
-        data class StatisticData(
-            private val qrType: String,
-            private val id: Int,
-            private val name: String,
-            private val type: String,
-            private val information: String
-        ) : Model {
-
-            companion object {
-
-                val stringType: String = StatisticData::class.java.simpleName
             }
         }
 

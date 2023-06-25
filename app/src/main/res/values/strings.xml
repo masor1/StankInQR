@@ -10,4 +10,6 @@
 
     <string name="error_message_unknown_qr_code_type">Unknown QR code type: %s</string>
     <string name="error_message_json_cannot_be_used">This json cannot be used in this application</string>
+    <string name="machine_image">Machine image</string>
+    <string name="link_icon">Link icon</string>
 </resources>
