@@ -1,0 +1,39 @@
+Для запуска проекта необходимо:
+1 Установить Android Studio version Electric Eel | 2022.1.1 Patch 2
+2 Внутри Android Studio зайти в настройки Build, Execution, Deployment/Build Tools/Gradle и установить JDK 11
+3 Для запуска на эмуляторе необходимо зайти в Device Manager, создать новый девайс, нажав Create device, выбрать необходимый девайс,
+далее скачть SDK Component с API level 21 и выше, после весего наджать finish и запусть созданный девайс из списка в окне Device Manager, нажав иконку play.
+После того, как девайс загружен, нажать на запуск проекта, наверху экрана зеленая кнопка play.
+4 Для запуска на реальном устройстве небходимо включить на устройстве режим разработчика, для этого нужно в настройках непрерывно нажимать на версию устройства в районе 10 раз
+после чего система оповестит Вам о том, что режим активирован. Далее необходимо перейти в настройки режима разработчика и выдать разрешение на отладку по USB или иной вариант отладкт.
+Далее подклчаем устройство к компьютуру и запускаем проект.
+5 Для работы с сетью нужно установить ПО Ngrok и поднять тонель с помощью консльной команды
+"ngrok http "file:///your_path_to_file" до папки с файлом machine.json с json следующего вида:
+[
+		{
+		"id": "1",
+		"name": "Объект автоматизации",
+		"imageUrl": "https://img2.gratispng.com/20180514/cw/kisspng-lathe-computer-icons-clip-art-5afa5abb330796.319177191526356667209.jpg",
+		"description": "Информация об объеке:\n\n   - мощность двигателя (от 0,5 до 2,2 кВт);\n   - тип используемой электросети (220/380 или 230/400);\n   - тип двигателя (асинхронный, коллекторный);\n   - тип привода (чаще всего поликлиновидный ремень);\n   - частота вращения вала;\n   - количество скоростей шпинделя."
+		},
+		{
+		"id": "2",
+		"name": "Forming Technology",
+		"imageUrl": "https://djmfoodprocessing.nl/wp-content/uploads/2021/12/forming-technology.png",
+		"description": "VacForm machines are ideal for producing burgers, cutlets, chicken nuggets, fillets, vegetarian products and more. The standard production capacity for chicken nuggets is over 1,400 kg per hour, while burgers can even be produced at a capacity of up to 4,750 kg per hour. If desired, even higher production capacities are possible, with which our form machines always perfectly match any (desired) production situation. The patented DJM pressure dividing system ensures extremely small weight variations, which prevents product loss and optimizes economic production."
+		},
+		{
+		"id": "3",
+		"name": "Co-Extrusion Technology",
+		"imageUrl": "https://djmfoodprocessing.nl/wp-content/uploads/2021/12/Co-Extrusion-Technogy.webp",
+		"description": "DJM’s co-extrusion machines are ideal for the production of (filled) snacks such as cheese balls, meat pies and other ‘3D Products’. They are unique in the world, which is illustrated by the fact that they can produce Scotch Eggs in one single process cycle. Simultaneous production, deploying up to 14 synchronous extrusion heads (or more in extended machine-versions), is reflected in a very high production capacity of up to 84,000 products per minute. Also the patented DJM pressure distribution system plays an important role in co-extrusion technology and forms the foundation for a high, constant transport speed, combined with low operating costs."
+		},
+		{
+		"id": "4",
+		"name": "Diaphragm Technology",
+		"imageUrl": "https://djmfoodprocessing.nl/wp-content/uploads/2021/12/diaphragm-technology-2.png",
+		"description": "A fast and continuous dosage opening is one of the most important features of DJM diaphragm machines. They can be used to produce round and oval shaped products such as meatballs, potato balls, fish balls and falafel, while more complex 3D shapes are also possible. Variation in viscosity and temperature is not a problem, so these machines can handle a wide range of product mixes. DJM diaphragm machines are available with up to16 diaphragm dosing heads, realising a production speed up to 150 strokes per minute and a output of over 140,000 products per hour. The patented DJM pressure distribution system ensures extremely precise portion control. Additional machine options include different diaphragm/iris shapes and designs, height-adjustable conveyor belts, stepper system for optimal loading of the conveyor belt, etc."
+		}
+]
+
+после чего нужно скопировать полученную ссылку и вставить в класс ProvideMachineApiService в константу BASE_URL b и пересобрать проект и запустить.
